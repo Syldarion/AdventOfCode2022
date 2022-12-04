@@ -1,13 +1,14 @@
 import re
 
+from util import get_file_lines_stripped
+
 
 def get_pairs(file_path):
     pairs = []
-    with open(file_path, "r") as f:
-        lines = [x.strip() for x in f.readlines()]
-        for line in lines:
-            parts = re.split("[-,]", line)
-            pairs.append(((int(parts[0]), int(parts[1])), (int(parts[2]), int(parts[3]))))
+    lines = get_file_lines_stripped(file_path)
+    for line in lines:
+        parts = re.split("[-,]", line)
+        pairs.append(((int(parts[0]), int(parts[1])), (int(parts[2]), int(parts[3]))))
     return pairs
 
 
