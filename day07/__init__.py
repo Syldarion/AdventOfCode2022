@@ -3,6 +3,38 @@ import re
 from util import text_file_args
 
 
+def generate_structure(lines):
+    structure = {
+        "/": {"local_size": 0}
+    }
+    current_path = []
+
+    for line in lines:
+        if line.startswith("$ cd"):
+            # change directory
+            if line == "$ cd ..":
+                current_path.pop()
+            else:
+                current_path.append(line[5:])
+        elif line.startswith("$ ls"):
+            # start listing, we can ignore this?
+            pass
+        elif line.startswith("dir"):
+            # dir listing
+            obj = structure
+            for path_piece in current_path:
+                obj = obj[path_piece]
+            obj[line[4:]] = {"local_size": 0}
+        else:
+            # file listing
+            obj = structure
+            for path_piece in current_path:
+                obj = obj[path_piece]
+            file_size_str = line.split()[0]
+            obj["local_size"] += int(file_size_str)
+    return structure
+
+
 def calculate_total_size(top_level):
     total_size = top_level["local_size"]
     del top_level["local_size"]
@@ -27,35 +59,7 @@ def sum_of_sub_100000_dirs(top_level):
 @text_file_args
 def part1(*args):
     lines = args[0]
-    structure = {
-        "/": {"local_size": 0}
-    }
-
-    current_path = []
-
-    for line in lines:
-        if line.startswith("$ cd"):
-            # change directory
-            if line == "$ cd ..":
-                current_path.pop()
-            else:
-                current_path.append(line[5:])
-        elif line.startswith("$ ls"):
-            # start listing, we can ignore this?
-            pass
-        elif line.startswith("dir"):
-            # dir listing
-            obj = structure
-            for path_piece in current_path:
-                obj = obj[path_piece]
-            obj[line[4:]] = {"local_size": 0}
-        else:
-            # file listing
-            obj = structure
-            for path_piece in current_path:
-                obj = obj[path_piece]
-            file_size_str = line.split()[0]
-            obj["local_size"] += int(file_size_str)
+    structure = generate_structure(lines)
 
     calculate_total_size(structure["/"])
     print(structure)
@@ -75,35 +79,7 @@ def get_directory_sizes_over_amount(top_level, amount):
 @text_file_args
 def part2(*args):
     lines = args[0]
-    structure = {
-        "/": {"local_size": 0}
-    }
-
-    current_path = []
-
-    for line in lines:
-        if line.startswith("$ cd"):
-            # change directory
-            if line == "$ cd ..":
-                current_path.pop()
-            else:
-                current_path.append(line[5:])
-        elif line.startswith("$ ls"):
-            # start listing, we can ignore this?
-            pass
-        elif line.startswith("dir"):
-            # dir listing
-            obj = structure
-            for path_piece in current_path:
-                obj = obj[path_piece]
-            obj[line[4:]] = {"local_size": 0}
-        else:
-            # file listing
-            obj = structure
-            for path_piece in current_path:
-                obj = obj[path_piece]
-            file_size_str = line.split()[0]
-            obj["local_size"] += int(file_size_str)
+    structure = generate_structure(lines)
 
     calculate_total_size(structure["/"])
 
