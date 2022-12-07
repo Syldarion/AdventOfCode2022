@@ -1,8 +1,9 @@
-from util import get_file_lines_stripped
+from util import text_file_args
 
 
+@text_file_args
 def part1(*args):
-    lines = get_file_lines_stripped(args[0])
+    lines = args[0]
     stream = lines[0]
 
     for i in range(len(stream) - 4):
@@ -12,8 +13,9 @@ def part1(*args):
             break
 
 
+@text_file_args
 def part2(*args):
-    lines = get_file_lines_stripped(args[0])
+    lines = args[0]
     stream = lines[0]
 
     for i in range(len(stream) - 14):

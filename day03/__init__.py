@@ -1,4 +1,4 @@
-from util import get_common_elements, get_file_lines_stripped
+from util import get_common_elements, text_file_args
 
 
 def letter_value(letter):
@@ -11,9 +11,10 @@ def letter_value(letter):
         return -1
 
 
+@text_file_args
 def part1(*args):
     rucksacks = []
-    lines = get_file_lines_stripped(args[0])
+    lines = args[0]
 
     for line in lines:
         line_len = len(line)
@@ -28,9 +29,10 @@ def part1(*args):
     print(rucksack_sum)
 
 
+@text_file_args
 def part2(*args):
     rucksack_groups = []
-    lines = get_file_lines_stripped(args[0])
+    lines = args[0]
 
     index = 0
 

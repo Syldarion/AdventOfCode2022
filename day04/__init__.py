@@ -1,17 +1,17 @@
 import re
 
-from util import get_file_lines_stripped
+from util import text_file_args
 
 
-def get_pairs(file_path):
+def get_pairs(lines):
     pairs = []
-    lines = get_file_lines_stripped(file_path)
     for line in lines:
         parts = re.split("[-,]", line)
         pairs.append(((int(parts[0]), int(parts[1])), (int(parts[2]), int(parts[3]))))
     return pairs
 
 
+@text_file_args
 def part1(*args):
     pairs = get_pairs(args[0])
 
@@ -26,6 +26,7 @@ def part1(*args):
     print(overlapping_pairs)
 
 
+@text_file_args
 def part2(*args):
     pairs = get_pairs(args[0])
 

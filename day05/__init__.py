@@ -1,11 +1,12 @@
 import re
 
-from util import get_file_lines_stripped
+from util import text_file_args
 
 
+@text_file_args
 def part1(*args):
-    crate_lines = get_file_lines_stripped(args[0])
-    step_lines = get_file_lines_stripped(args[1])
+    crate_lines = args[0]
+    step_lines = args[1]
 
     crate_queues = []
     for i, line in enumerate(crate_lines):
@@ -24,9 +25,10 @@ def part1(*args):
         print(q.pop())
 
 
+@text_file_args
 def part2(*args):
-    crate_lines = get_file_lines_stripped(args[0])
-    step_lines = get_file_lines_stripped(args[1])
+    crate_lines = args[0]
+    step_lines = args[1]
 
     crate_queues = []
     for i, line in enumerate(crate_lines):

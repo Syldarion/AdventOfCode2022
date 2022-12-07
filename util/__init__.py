@@ -12,3 +12,12 @@ def get_common_elements(*collections):
     for collection in collections[1:]:
         common.intersection_update(set(collection))
     return list(common)
+
+
+def text_file_args(func):
+    def wrapper(*args, **kwargs):
+        file_lines = []
+        for file_path in args:
+            file_lines.append(get_file_lines_stripped(file_path))
+        func(*file_lines, **kwargs)
+    return wrapper
